@@ -52,7 +52,7 @@ def process_form():
     cursor = conn.cursor()
 
     # insert the new row
-    cursor.execute("""INSERT INTO Conversations(Topic,Username,Text,Time) VALUES('%s','%s','%s','%s');""" % (topic,username,firstPost,"2018-01-12"))
+    cursor.execute("""INSERT INTO Conversations(Topic,Username,Text,Time,Likes) VALUES('%s','%s','%s','%s','%d');""" % (topic,username,firstPost,"2018-01-12",0))
 
 
     # MySQLdb has been building a transaction as we run.  Commit them now, and

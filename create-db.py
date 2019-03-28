@@ -7,11 +7,15 @@ conn = MySQLdb.connect(host = "cs346-project2-1.cbhi0v14khzk.us-west-2.rds.amazo
     db = "cs346_project2")
 
 cursor = conn.cursor()
+
+cursor.execute("DROP TABLE Conversations;")
+
 cursor.execute("""
     CREATE TABLE Conversations(
     Topic VARCHAR(100),
     Username VARCHAR(42),
     Text VARCHAR(2000),
     Time DATE,
+    Likes INT(10),
     CONSTRAINT Conversations PRIMARY KEY(Topic, Username));
 """)
