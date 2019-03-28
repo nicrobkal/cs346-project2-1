@@ -95,7 +95,7 @@ print("""Content-Type: text/html;charset=utf-8
         </fieldset>
         <fieldset>
             <legend> <font size="+2"> <b>Posts</b> </font> </legend>
-            <form action="conversation.py" method="post" id="updateUpvoteCount">
+            <form action="update_vote.py" method="post" id="updateUpvoteCount">
                 <!--- Text insertion starts here -->""" % (Topic, Topic, Username))
 
 #create_table()
@@ -131,10 +131,10 @@ for c in active:
 										&nbsp %s &nbsp
 									</td>
 									<td>
-										&nbsp<button type="submit" form="upvoteText" value="Submit">👍 Upvote</button>&nbsp
+										&nbsp<button type="submit" form="updateUpvoteCount" value="Submit">👍 Upvote</button>&nbsp
 									</td>
 									<td>
-										&nbsp<button type="submit" form="upvoteText" value="Submit">👎 Downvote</button>&nbsp
+										&nbsp<button type="submit" form="updateUpvoteCount" value="Submit">👎 Downvote</button>&nbsp
 									</td>
 								</tr>
 							</tbody>
