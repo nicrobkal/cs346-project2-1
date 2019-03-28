@@ -72,7 +72,7 @@ def write_html():
 									<input type="text" name="Username" value="GrumpyCat"><br>
 								</td>
 								<td>
-                                                                        <input type="text" name="Text" value="First Post!"><br>
+                                                                        <input type="text" name="Text" size="127" value="First Post!"><br>
                                                                 </td>
 								<td>
 									<button type="submit" form="newConversation" value="Submit">Submit</button>

@@ -8,14 +8,24 @@ conn = MySQLdb.connect(host = "cs346-project2-1.cbhi0v14khzk.us-west-2.rds.amazo
 
 cursor = conn.cursor()
 
-cursor.execute("DROP TABLE Conversations;")
+cursor.execute("DROP TABLE IF EXISTS Conversations, Posts;")
 
 cursor.execute("""
     CREATE TABLE Conversations(
     Topic VARCHAR(100),
     Username VARCHAR(42),
+    Time DATE,
+    CONSTRAINT Conversations PRIMARY KEY(Topic, Username));
+""")
+
+cursor.execute("""
+    CREATE TABLE Posts(
+    PostNum INT(10) AUTO_INCREMENT,
+    Topic VARCHAR(100),
+    OriginUsername VARCHAR(42),
+    Username VARCHAR(42),
     Text VARCHAR(2000),
     Time DATE,
     Likes INT(10),
-    CONSTRAINT Conversations PRIMARY KEY(Topic, Username));
+    CONSTRAINT Posts PRIMARY KEY(PostNum));
 """)

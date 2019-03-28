@@ -62,12 +62,12 @@ print("""Content-Type: text/html;charset=utf-8
         <fieldset>
             <legend> <font size="+2"> <b>New Post</b> </font> </legend>
             <p>
-                <form action="conversation.py" method="post" id="addText">
+                <form action="create_post.py" method="post" id="addText">
                     <table>
                         <tbody>
                             <tr>
                                 <td>
-                                    New Text:
+                                    New Post:
                                 </td>
                                 <td>
                                     Username:
@@ -75,13 +75,17 @@ print("""Content-Type: text/html;charset=utf-8
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="text" name="Topic" size="127" value=""><br>
+                                    <input type="text" name="Text" size="127" value=""><br>
                                 </td>
                                 <td>
                                     <input type="text" name="Username" value=""><br>
                                 </td>
                                 <td>
-                                    <button type="submit" form="addText" value="Submit">Submit</button>
+				    <input type="hidden" name="Topic" value="%s" /><br>
+				    <input type="hidden" name="OriginUsername" value="%s" /><br>
+				</td>
+				<td>
+                                    <button type="submit" value="Submit">Submit</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -92,16 +96,55 @@ print("""Content-Type: text/html;charset=utf-8
         <fieldset>
             <legend> <font size="+2"> <b>Posts</b> </font> </legend>
             <form action="conversation.py" method="post" id="updateUpvoteCount">
-                <table>
-                    <tbody>
-                    <!--- Text insertion starts here -->""" % (Topic))
+                <!--- Text insertion starts here -->""" % (Topic, Topic, Username))
 
 #create_table()
 
+conn = MySQLdb.connect(host = "cs346-project2-1.cbhi0v14khzk.us-west-2.rds.amazonaws.com",
+    user = "nicrobkal",
+    port = 3306,
+    passwd = "Cosmo123$%",
+    db = "cs346_project2")
+
+cursor = conn.cursor()
+cursor.execute("SELECT * FROM Posts WHERE Topic='%s' AND OriginUsername='%s';" %(Topic, Username))
+
+active = []
+for row in cursor.fetchall():
+    active.append([row[0], row[1], row[2], row[3], row[4], row[5], row[6]])
+
+cursor.close()
+conn.close()
+
+for c in active:
+	
+    print(""" 
+                                                       <fieldset> <legend> %s </legend> 
+                                                       <table>
+							<tbody>
+								<tr>
+									%s
+									<td>
+										&nbsp %s &nbsp
+									</td>
+									<td>
+										&nbsp %s &nbsp
+									</td>
+									<td>
+										&nbsp<button type="submit" form="upvoteText" value="Submit">👍 Upvote</button>&nbsp
+									</td>
+									<td>
+										&nbsp<button type="submit" form="upvoteText" value="Submit">👎 Downvote</button>&nbsp
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</fieldset>
+ 
+   """ % (c[3], c[4], c[5], c[6]))
+
 print("""
                     <!--- Text insertion ends here -->
-                    </tbody>
-                </table>
             </form>
         </fieldset>
          
