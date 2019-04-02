@@ -12,17 +12,12 @@ from common import FormError
 
 form = cgi.FieldStorage()
 
-if "Username" not in form or "Text" not in form or "Topic" not in form or "OriginUsername" not in form:
+if "OriginUsername" not in form or "PostNum" not in form or "Topic" not in form:
     raise FormError("Invalid parameters: Username//Text//Topic//Original Username not in form")
 
+postNum = form.getvalue('PostNum')
 topic = form.getvalue('Topic')
-username = form.getvalue('Username')
 originUsername = form.getvalue('OriginUsername')
-text = form.getvalue('Text')
-
-for c in topic+username:
-    if c not in "_-" and not c.isdigit() and not c.isalpha():
-        raise FormError("Invalid parameters: The topic and username can only contains upper and lowercase characters, digits, underscores, and hypens")
 
 #connect to the database
 conn = MySQLdb.connect(host   = pnsdp.SQL_HOST,
@@ -33,7 +28,7 @@ conn = MySQLdb.connect(host   = pnsdp.SQL_HOST,
 
 cursor = conn.cursor()
 
-cursor.execute("""INSERT INTO Posts(Topic,OriginUsername,Username,Text,Likes) VALUES('%s','%s','%s','%s','%d');""" % (topic,originUsername,username,text,0))
+cursor.execute("""UPDATE Posts SET Likes=Likes+1 WHERE (PostNum='%s' AND Topic='%s');""" % (postNum, topic))
 
 conn.commit()
 cursor.close()
@@ -47,10 +42,10 @@ try:
 except FormError as e:
     print("""Content-Type: text/html;charset=utf-8
 <html>
-<head><title>ERROR FORM</title></head>
+<head><title>Skype 1985</title></head>
 <body>
 <p>ERROR: %s
-<p><a href="list.py">Return to conversation list</a>
+<p><a href="list.py">Return to game list</a>
 </body>
 </html>
 """ % e.msg, end="")
@@ -58,4 +53,4 @@ except FormError as e:
 except:
     print("""Content-Type: text/html;charset=utf-8\n\n""")
 
-    raise
+    raise    # throw the error again, now that we've printed the lead text - and this will cause cgitb to report the error
