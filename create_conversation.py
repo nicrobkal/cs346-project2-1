@@ -33,7 +33,7 @@ def process_form():
 
     # Insert new rows
     cursor.execute("""INSERT INTO Conversations(Topic,Username) VALUES('%s','%s');""" % (topic,username))
-    cursor.execute("""INSERT INTO Posts(Topic,OriginUsername,Username,Text,Likes) VALUES('%s','%s','%s','%s','%d');""" % (topic,username,username,firstPost,0))
+    cursor.execute("""INSERT INTO Posts(Topic,OriginUsername,Username,Text,Likes) VALUES("%s","%s","%s","%s","%d");""" % (topic,username,username,firstPost,0))
 
     conn.commit()
     cursor.close()
