@@ -33,7 +33,11 @@ conn = MySQLdb.connect(host   = pnsdp.SQL_HOST,
 
 cursor = conn.cursor()
 
+<<<<<<< HEAD
 cursor.execute("""INSERT INTO Posts(Topic,OriginUsername,Username,Text,Likes) VALUES("%s","%s","%s","%s","%d");""" % (topic,originUsername,username,text,0))
+=======
+cursor.execute("""INSERT INTO Posts(Topic,OriginUsername,Username,Text,Likes) VALUES('%s','%s','%s','%s','%d');""" % (topic,originUsername,username,text,0))
+>>>>>>> 458ed66a839fd2a9afa561f469074ab8de6df0d2
 
 conn.commit()
 cursor.close()
