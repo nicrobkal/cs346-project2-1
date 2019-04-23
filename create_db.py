@@ -1,9 +1,9 @@
 import MySQLdb
 
 conn = MySQLdb.connect(host = "cs346-project2-1.cbhi0v14khzk.us-west-2.rds.amazonaws.com",
-    user = "nicrobkal",
+    user = "",
     port = 3306,
-    passwd = "Cosmo123$%",
+    passwd = "",
     db = "cs346_project2")
 
 cursor = conn.cursor()
